@@ -8,11 +8,11 @@
 -- reports (6 marks)
 use master
 go
-drop database dbAssessment03
+drop database dbAssignment03
 go
 create database dbAssignment03
 go
-use dbAssessment03
+use dbAssignment03
 go
 CREATE TABLE tbCustomer -- AccessLevel is a BIT, 1 is admin, 0 is not an admin
 (
@@ -36,7 +36,7 @@ CREATE TABLE tbProduct -- there are many products in a single category
 (
 ProductID int primary key identity(1,1),
 Name varchar(max),
-price decimal(7,2),
+Price decimal(7,2),
 PrimaryImagePath varchar(max),
 CategoryID int references tbCustomer(CustomerID)
 )
@@ -59,10 +59,10 @@ ProductID int references tbProduct(ProductID)
 INSERT INTO tbCustomer -- 5, 1 admin, 4 non-admins 
 (UserName,Password,FirstName,LastName,Address,City,PhoneNumber,AccessLevel)values
 ('Admin','AdminPass','AdminFirstName','AdminLastName','FromNoWhere','CityOfLight',555-555-5555,'1'),
-('NormalUser1','NormalUserPass1','NormalFirstName1','NormalLastName1','FromnoWhere1','CityofLight1','0'),
-('NormalUser2','NormalUserPass2','NormalFirstName2','NormalLastName2','FromnoWhere2','CityofLight2','0'),
-('NormalUser3','NormalUserPass3','NormalFirstName3','NormalLastName3','FromnoWhere3','CityofLight3','0'),
-('NormalUser4','NormalUserPass4','NormalFirstName4','NormalLastName4','FromnoWhere4','CityofLight4','0')
+('NormalUser1','NormalUserPass1','NormalFirstName1','NormalLastName1','FromnoWhere1','CityofLight1',111-111-1111,'0'),
+('NormalUser2','NormalUserPass2','NormalFirstName2','NormalLastName2','FromnoWhere2','CityofLight2',222-222-2222,'0'),
+('NormalUser3','NormalUserPass3','NormalFirstName3','NormalLastName3','FromnoWhere3','CityofLight3',333-333-3333,'0'),
+('NormalUser4','NormalUserPass4','NormalFirstName4','NormalLastName4','FromnoWhere4','CityofLight4',444-444-4444,'0')
 INSERT INTO tbCategory -- 4 categories
 (Name,ImagePath) values
 ('Tshirt','tshirt.jpg'),
@@ -106,32 +106,226 @@ create procedure spGetCategoryByID
 @CategoryID int = null
 )
 as begin
-select tbCategory.ID, Name,'./Images/'+ImagePath as 'ImagePath' from tbCategory 
+select tbCategory.CategoryID, Name,'./Images/'+ImagePath as 'ImagePath' from tbCategory 
 where CategoryID = @CategoryID
 end
 go
---
-spInsertCategory
-spDeleteCategory
-spUpdateCategory
+--inserting to category
+create procedure spInsertCategory
+(
+@CategoryID int = null,
+@Name varchar(max) = null,
+@ImagePath varchar(max) = null
+)
+as begin
+insert into tbCategory(Name,ImagePath)values
+(@Name,ISNULL(@ImagePath,'no_image_available.png'))
+end
+go
+-- deleting a category proc
+create procedure spDeleteCategory
+(
+@CategoryID int = null
+)
+as begin
+delete from tbCategory where CategoryID=@CategoryID
+end
+go
+-- updating category
+create procedure spUpdateCategory
+(
+@CategoryID int = null,
+@Name varchar(max) = null,
+@ImagePath varchar(max) = null
+)
+as begin
+update tbCategory set Name = @Name,
+                      ImagePath = ISNULL(@ImagePath,ImagePath)
+end
+go
+-- get login info
+create procedure spLogin
+(
+@UserName varchar(max),
+@Password varchar(max)
+)
+as begin
+select * from tbCustomer where UserName = @UserName and Password = @Password
+end
+go
+-- selecting customerbyid 
+create procedure spGetCustomerByID
+(
+@CustomerID int = null
+)
+as begin
+select * from tbCustomer where CustomerID = @CustomerID
+end
+go
+-- insert customer // register
+create procedure spInsertCustomer
+(
+@CustomerID int = null,
+@UserName varchar(max),
+@Password varchar(max),
+@FirstName varchar(max),
+@LastName varchar(max),
+@Address varchar(max),
+@City varchar(max),
+@PhoneNumber int,
+@AccessLevel varchar(10)
+)
+as begin
+insert into tbCustomer(UserName,Password,FirstName,LastName,Address,City,PhoneNumber,AccessLevel) values
+(@UserName,@Password,@FirstName,@LastName,@Address,@City,@PhoneNumber,@AccessLevel)
+end
+go
+-- deleting customer
+create procedure spDeleteCustomer(
+@CustomerID int = null
+)
+as begin
+delete from tbCustomer where CustomerID = @CustomerID
+end
+go
+-- updating customer
+create procedure spUpdateCustomer
+(
+@CustomerID int = null,
+@UserName varchar(max),
+@Password varchar(max),
+@FirstName varchar(max),
+@LastName varchar(max),
+@Address varchar(max),
+@City varchar(max),
+@PhoneNumber int,
+@AccessLevel varchar(10)
+)
+as begin
+update tbCustomer set
 
-spLogin
-spGetCustomerByID
-spInsertCustomer
-spDeleteCustomer
-spUpdateCustomer
+UserName = @UserName,
+Password = @Password,
+FirstName = @FirstName,
+LastName = @LastName,
+Address = @Address,
+City = @City,
+PhoneNumber = @PhoneNumber,
+AccessLevel = @AccessLevel
+end
+go
+-- joinging the catid to prodid and getting the info
+create procedure spGetProductsByCategoryID
+(
+@ProductID int = null,
+@Name varchar(max)= null,
+@Price decimal(7,2)=null,
+@PrimaryImagePath varchar(max)=null,
+@CategoryID int=null,
+@ProductName varchar(max)=null,
+@ImagePath varchar(max)=null
+)
+as begin
+select tbCategory.CategoryID,tbCategory.Name,Price,PrimaryImagePath,tbProduct.ProductID,tbProduct.Name,ImagePath 
+from tbProduct join tbCategory on tbCategory.CategoryID = tbProduct.CategoryID
+order by tbCategory.CategoryID
+end
+go
 
-spGetProductsByCategoryID
-spGetProductByID
-spInsertProduct
-spDeleteProduct
-spUpdateProduct
+create procedure spGetProductByID
+(
+@ProductID int = null
+)
+as begin
+Select * from tbProduct where ProductID=@ProductID
+end
+go
+-- inserting product 
+create procedure spInsertProduct
+(
+@ProductID int = null,
+@Name varchar(max) = null,
+@Price decimal(7,2) = null,
+@PrimaryImagePath varchar(max)=null,
+@CategoryID int = null
+)
+as begin
+insert into tbProduct (Name,Price,PrimaryImagePath,CategoryID)values
+(@Name,@Price,isnull(@PrimaryImagePath,'no_image_available.png'),@CategoryID)
+end
+go
+-- deleting  product
+create procedure spDeleteProduct
+(
+@ProductID int = null
+)
+as begin
+delete from tbProduct where ProductID = @ProductID
+end
+go
+-- updating product 
+create procedure spUpdateProduct
+(
+@ProductID int = null,
+@Name varchar(max) = null,
+@Price decimal(7,2) = null,
+@PrimaryImagePath varchar(max)=null,
+@CategoryID int = null
+)
+as begin
+update tbProduct set 
+Name = @Name,
+Price = @Price,
+PrimaryImagePath = @PrimaryImagePath,
+CategoryID = @CategoryID
+end
+go
 
-spGetOrderByID
-spInsertOrder
-spDeleteOrder
-spUpdateOrder
+create procedure spGetOrderByID
+(
+@OrderID int =null
+)
+as begin
+select * from tbOrder where OrderID = @OrderID
+end
+go
+create procedure spInsertOrder
+(
+@OrderID int = null,
+@OrderDate date=null,
+@PricePaid decimal(7,2)=null,
+@CustomerID int =null
+)
+as begin
+insert into tbOrder (OrderID,OrderDate,PricePaid,CustomerID)values 
+                    (@OrderID,@OrderDate,@PricePaid,@CustomerID)
+end
+go
 
+create procedure spDeleteOrder
+(
+@OrderID int = null
+)
+as begin
+ delete from tbOrder where OrderID = @OrderID
+end
+go
+
+create procedure spUpdateOrder
+(
+@OrderID int = null,
+@OrderDate date=null,
+@PricePaid decimal(7,2)=null,
+@CustomerID int =null
+)
+as begin
+update tbOrder set 
+OrderID = @OrderID,
+OrderDate = @OrderDate,
+PricePaid = @PricePaid,
+@CustomerID = @CustomerID
+end
+go
 spGetOrderDetailByID
 spInsertOrderDetail
 spDeleteOrderDetail
@@ -143,3 +337,4 @@ spGetOrderAndDetailsByOrderID -- Show all Details based on the OrderID
 1. Top 3 Customers for TOTAL spent among all orders
 2. Show each category and how many products are available in each
 3. Show the products listed by total amount paid (take into consideration quantity & price)
+

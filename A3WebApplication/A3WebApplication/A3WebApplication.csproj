@@ -66,6 +66,20 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\AmericanApparelJerseyTshirt.jpg" />
+    <Content Include="Images\AnvilJerseyTshirt.jpg" />
+    <Content Include="Images\AugustaYouthGirlsVneck.jpg" />
+    <Content Include="Images\BellaYouthCrewNeck.jpg" />
+    <Content Include="Images\BellaYouthTank.jpg" />
+    <Content Include="Images\GildanUltraCotton.jpg" />
+    <Content Include="Images\HanesTagLessTshirt.jpg" />
+    <Content Include="Images\Hoodies.jpg" />
+    <Content Include="Images\Jerzees.jpg" />
+    <Content Include="Images\Ladies&amp;Junior.jpg" />
+    <Content Include="Images\no_image_available.png" />
+    <Content Include="Images\Polos.jpg" />
+    <Content Include="Images\Sport-TekColorBlockPerFormanceHoodedSweatshirt.jpg" />
+    <Content Include="Images\tshirt.jpg" />
     <Content Include="packages.config" />
     <Content Include="MainMaster.Master" />
     <None Include="Web.Debug.config">
