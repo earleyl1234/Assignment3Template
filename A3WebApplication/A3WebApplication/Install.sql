@@ -120,6 +120,7 @@ create procedure spInsertCategory
 as begin
 insert into tbCategory(Name,ImagePath)values
 (@Name,ISNULL(@ImagePath,'no_image_available.png'))
+select SCOPE_IDENTITY() as 'NewCatID'
 end
 go
 -- deleting a category proc
@@ -178,6 +179,7 @@ create procedure spInsertCustomer
 as begin
 insert into tbCustomer(UserName,Password,FirstName,LastName,Address,City,PhoneNumber,AccessLevel) values
 (@UserName,@Password,@FirstName,@LastName,@Address,@City,@PhoneNumber,@AccessLevel)
+select SCOPE_IDENTITY() as 'NewCustomerID'
 end
 go
 -- deleting customer
@@ -252,6 +254,7 @@ create procedure spInsertProduct
 as begin
 insert into tbProduct (Name,Price,PrimaryImagePath,CategoryID)values
 (@Name,@Price,isnull(@PrimaryImagePath,'no_image_available.png'),@CategoryID)
+select SCOPE_IDENTITY() as 'NewProdID'
 end
 go
 -- deleting  product
@@ -299,6 +302,7 @@ create procedure spInsertOrder
 as begin
 insert into tbOrder (OrderID,OrderDate,PricePaid,CustomerID)values 
                     (@OrderID,@OrderDate,@PricePaid,@CustomerID)
+select SCOPE_IDENTITY() as 'NewOrderID'
 end
 go
 
@@ -320,21 +324,93 @@ create procedure spUpdateOrder
 )
 as begin
 update tbOrder set 
-OrderID = @OrderID,
 OrderDate = @OrderDate,
 PricePaid = @PricePaid,
 @CustomerID = @CustomerID
 end
 go
-spGetOrderDetailByID
-spInsertOrderDetail
-spDeleteOrderDetail
-spUpdateOrderDetail
-spGetOrderAndDetailsByOrderID -- Show all Details based on the OrderID
+create procedure spGetOrderDetailByID
+(
+@OrderDetailID int =null,
+@Quantity int=null,
+@SubTotal decimal(7,2)=null,
+@OrderID int =null,
+@ProductID int =null
+)
+as begin
+select OrderDetailID, Quantity,SubTotal,
+tbProduct.ProductID,tbProduct.Name,tbProduct.Price,tbProduct.PrimaryImagePath,
+tbOrder.OrderID,tbOrder.OrderDate,tbOrder.PricePaid
+ from tbOrderDetail join tbProduct on 
+tbProduct.ProductID = tbOrderDetail.ProductID join tbOrder on
+ tbOrder.OrderID =tbOrderDetail.OrderID where tbOrderDetail.OrderDetailID = @OrderDetailID
+end
+go
+create procedure spInsertOrderDetail
+(
+@OrderDetailID int =null,
+@Quantity int=null,
+@SubTotal decimal(7,2)=null,
+@OrderID int =null,
+@ProductID int =null
+)
+as begin
+insert into tbOrderDetail(Quantity,SubTotal,OrderID,ProductID)values
+                         (@Quantity,@SubTotal,@OrderID,@ProductID)
+select SCOPE_IDENTITY() as 'NewOrderDetailID'
+end
+go
+
+create procedure spDeleteOrderDetail
+(
+@OrderDetailID int = null
+)
+as begin
+delete from tbOrderDetail where OrderDetailID = @OrderDetailID
+end
+go
+create procedure spUpdateOrderDetail
+(
+@OrderDetailID int =null,
+@Quantity int=null,
+@SubTotal decimal(7,2)=null,
+@OrderID int =null,
+@ProductID int =null
+)
+as begin
+update tbOrderDetail set
+Quantity = @Quantity,
+SubTotal = @SubTotal,
+OrderID = @OrderID,
+ProductID = @ProductID
+where OrderDetailId = @OrderDetailID
+end
+go
+create procedure spGetOrderAndDetailsByOrderID -- Show all Details based on the OrderID
+(
+@OrderDetailID int =null,
+@Quantity int=null,
+@SubTotal decimal(7,2)=null,
+@OrderID int =null,
+@ProductID int =null
+)
+as begin
+select OrderDetailID,Quantity,SubTotal,tbOrder.OrderID,tbOrder.OrderDate
+,tbOrder.PricePaid,tbOrder.CustomerID
+ from tbOrderDetail join tbOrder on tbOrder.OrderID =
+  tbOrderDetail.OrderID order by tbOrder.OrderID 
+end
+go
 
 
 -- Create these reports:
-1. Top 3 Customers for TOTAL spent among all orders
-2. Show each category and how many products are available in each
-3. Show the products listed by total amount paid (take into consideration quantity & price)
+-- 1. Top 3 Customers for TOTAL spent among all orders
+select top 3 tbCustomer.FirstName,PricePaid,Quantity,SubTotal from tbOrderDetail join tbOrder on
+ tbOrder.OrderID = tbOrderDetail.OrderID 
+join tbCustomer on tbOrder.CustomerID = 
+tbCustomer.CustomerID order by tbCustomer.CustomerID desc
+
+--2. Show each category and how many products are available in each
+
+-- 3. Show the products listed by total amount paid (take into consideration quantity & price)
 

@@ -22,7 +22,7 @@ namespace A3ClassLibrary
         public void AddToCart(int productID, int quantity)
         {
             CartItem item = new CartItem(productID, quantity);
-            
+
             // TODO (1 MARK): Add the new item into the cart.
             // BONUS MARK: Check to see if the item already exists, if so, update it by the quantity value in the parameter.
         }
@@ -54,7 +54,7 @@ namespace A3ClassLibrary
         /// <returns>CartItem built from productID or null if none found matching</returns>
         //public CartItem GetCartItem(int productID)
         //{
-            // TODO (3 marks)
+        // TODO (3 marks)
         //}
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace A3ClassLibrary
 
             return orderId;
         }
-        
+
         public double CalculateTotal()
         {
             double sum = 0;
@@ -86,11 +86,11 @@ namespace A3ClassLibrary
 
             return sum;
         }
-        
+
         // TODO (2 MARKS): return a boolean expression which returns true when the Cart is empty
         //public bool IsEmpty()
         //{
-            
+
         //}
     }
 }

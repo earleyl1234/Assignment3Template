@@ -1,14 +1,28 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MainMaster.master.cs" Inherits="A3WebApplication.MainMaster" %>
 
 <!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 <body>
+    
+
+<div class="w3-light-grey w3-container  w3-center w3-animate-top ">
+  <h1 class="w3-jumbo w3-dark-grey">World of t-Shirt</h1>
+  <p>Mission, Vission & make your own Shirt</p>
+</div>
+
+<div class="w3-topnav w3-large w3-center w3-blue">
+  <a href="#">Category</a>
+  <a href="#">Products</a>
+  <a href="#">Stores</a>
+  <a href="#">Contact</a>
+    <asp:HyperLink ID="hlAccount" NavigateUrl="~/Login.aspx" runat="server">Account</asp:HyperLink>
+</div>
+
     <form id="form1" runat="server">
-        9 MARKS TOTAL
+<%--        9 MARKS TOTAL
         2 BONUS MARKS TOTAL
         TODO:
         - 5 MARKS: Make a consistent CSS theme (with CSS file), you may download one from the internet, you just have to impliment it.
@@ -16,8 +30,15 @@
         - 1 MARK: Show the Logout button only, if the customer is logged in
         - 1 MARK: Show a welcome message with the currently logged in Customer's email
         - 1 MARK: Show a link to the Admin area(s) if the Customer is logged in as an Admin
-        - BONUS 2 MARKS: show a number representing how many items are in the shopping cart right now
+        - BONUS 2 MARKS: show a number representing how many items are in the shopping cart right now--%>
         <asp:ContentPlaceHolder ID="ContentPlaceHolderMain" runat="server"></asp:ContentPlaceHolder>
     </form>
+
+<footer class="w3-container w3-center w3-blue">
+  <h5>@EARLEYL1234@gmail.com</h5>
+  <p>Copyright all right reserved</p>
+</footer>
+     
 </body>
-</html>
+</html> 
+

@@ -66,6 +66,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Home.aspx" />
     <Content Include="Images\AmericanApparelJerseyTshirt.jpg" />
     <Content Include="Images\AnvilJerseyTshirt.jpg" />
     <Content Include="Images\AugustaYouthGirlsVneck.jpg" />
@@ -119,6 +120,13 @@
     </Compile>
     <Compile Include="CategoriesPage.aspx.designer.cs">
       <DependentUpon>CategoriesPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
