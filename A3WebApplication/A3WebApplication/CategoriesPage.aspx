@@ -1,9 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MainMaster.Master" AutoEventWireup="true" CodeBehind="CategoriesPage.aspx.cs" Inherits="A3WebApplication.CategoriesPage" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolderMain" runat="server">
-    TODO: 
-    - Show the categories in a DataList (2 MARKS)
-    - Make each category a clickable link (2 MARKS) 
-        (should redirect to the ProductsPage with a query string of the CategoryID clicked on.
-        Example: If you click on Category 2, redirect to ProductsPage.aspx?CategoryID=2)
-    - Show each category as an image (1 MARK)
+      <asp:DataList ID="dlCategory" RepeatColumns="1" DataKeyField="CategoryID" runat="server" DataSourceID="SqlDataSource1">
+          <ItemTemplate>       
+              Name:<asp:LinkButton ID="lbName"  runat="server"><%# Eval("Name") %></asp:LinkButton>
+              
+                      
+              <asp:Image ID="Image1" runat="server" ImageUrl='<%#Eval("ImagePath","Images/{0}") %>' Height="250px" Width="250px"  />
+              <br />
+          </ItemTemplate>
+      </asp:DataList>
+    <asp:SqlDataSource runat="server" ID="SqlDataSource1" ConnectionString='<%$ ConnectionStrings:dbA3ConnStr %>' SelectCommand="SELECT * FROM [tbCategory]"></asp:SqlDataSource>
 </asp:Content>

@@ -11,7 +11,31 @@ namespace A3WebApplication
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // NOTE: You will need to use the Security Class to determine if logged in or not
+
+            if (Security.IsCustomerAdmin())
+            {
+                hlLogin.Visible = false;
+                hlAdmin.Visible = true;
+                lbLogout.Visible = true;
+                lbwelcome.Text = "Welcome " + Security.CurrentCustomer.FirstName;
+            }
+
+            else if (!Security.IsCustomerLoggedIn())
+            {
+                hlLogin.Visible = true;
+                lbLogout.Visible = false;
+               
+            }
+        }
+
+        protected void lbLogout_Click(object sender, EventArgs e)
+        {
+            Security.LogOut();
+            Response.Redirect("Home.aspx");
+            hlLogin.Visible = true;
+            hlAdmin.Visible = false;
+            lbLogout.Visible = false;
+
         }
     }
 }

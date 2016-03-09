@@ -11,7 +11,15 @@ namespace A3WebApplication
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            pnlselectcat.Visible = true;
+            
+        }
 
+        protected void lbHoodie_Click(object sender, EventArgs e)
+        {
+            pnlselectcat.Visible = false;
+            pnlLadies.Visible = false;
+            pnlHoodie.Visible = true;
         }
     }
 }

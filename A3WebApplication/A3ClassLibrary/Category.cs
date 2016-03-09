@@ -18,7 +18,8 @@ namespace A3ClassLibrary
         // Create a method for creating a new Category based on a CategoryID passed
         // Example: CategoryID 3 is passed, 3 is used as an SQL Param to retrieve a matching row in the database with CategoryID 3
         // populate a new Category instance with the values returned from the database
-        public Category()       {   }
+        public Category()
+        {   }
         public Category(int CategoryID)
         {
             string connStr = ConfigurationManager.ConnectionStrings["dbA3ConnStr"].ConnectionString;
@@ -67,7 +68,7 @@ namespace A3ClassLibrary
 
             string connStr = ConfigurationManager.ConnectionStrings["dbA3ConnStr"].ConnectionString;
             DAL_Project.DAL d = new DAL_Project.DAL(connStr);
-            DataSet ds = d.ExecuteProcedure("spGetCategories");
+            DataSet ds = d.ExecuteProcedure("spGetCategoriesByID");
 
             foreach (DataRow category in ds.Tables[0].Rows)
             {

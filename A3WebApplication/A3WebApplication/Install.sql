@@ -24,7 +24,7 @@ LastName varchar(max),
 Address varchar(max),
 City varchar(max),
 PhoneNumber int,
-AccessLevel varchar(10) -- admin = 1 & not admin = 0
+AccessLevel bit -- admin = 1 & not admin = 0
 )
 CREATE TABLE tbCategory
 (
@@ -101,7 +101,7 @@ INSERT INTO tbOrderDetail -- one item on the first order, 3 items on the second 
 -- If a procedure says: ByID, it means return ALL rows in the table if an ID is not supplied (ISNULL)
 go
 --procedure for gettingcategorybyid
-create procedure spGetCategoryByID
+create procedure spGetCategoriesByID
 (
 @CategoryID int = null
 )
@@ -174,7 +174,7 @@ create procedure spInsertCustomer
 @Address varchar(max),
 @City varchar(max),
 @PhoneNumber int,
-@AccessLevel varchar(10)
+@AccessLevel bit
 )
 as begin
 insert into tbCustomer(UserName,Password,FirstName,LastName,Address,City,PhoneNumber,AccessLevel) values
@@ -201,7 +201,7 @@ create procedure spUpdateCustomer
 @Address varchar(max),
 @City varchar(max),
 @PhoneNumber int,
-@AccessLevel varchar(10)
+@AccessLevel bit
 )
 as begin
 update tbCustomer set
@@ -411,6 +411,13 @@ join tbCustomer on tbOrder.CustomerID =
 tbCustomer.CustomerID order by tbCustomer.CustomerID desc
 
 --2. Show each category and how many products are available in each
+select tbCategory.Name, COUNT(*) as 'product' from tbCategory  
+ JOIN tbProduct on tbCategory.CategoryID = tbProduct.CategoryID 
+ group by tbCategory.Name 
 
 -- 3. Show the products listed by total amount paid (take into consideration quantity & price)
+select Name, sum(Price * Quantity) as 'Total Amount' from tbProduct  
+ JOIN tbOrderDetail ON tbProduct.ProductID = tbOrderDetail.ProductID  group by Name 
+ order by [Total Amount] desc 
+
 

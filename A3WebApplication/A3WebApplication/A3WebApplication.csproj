@@ -81,6 +81,7 @@
     <Content Include="Images\Polos.jpg" />
     <Content Include="Images\Sport-TekColorBlockPerFormanceHoodedSweatshirt.jpg" />
     <Content Include="Images\tshirt.jpg" />
+    <Content Include="Images\WOW.jpg" />
     <Content Include="packages.config" />
     <Content Include="MainMaster.Master" />
     <None Include="Web.Debug.config">
@@ -97,6 +98,7 @@
     <Content Include="Install.sql" />
     <Content Include="Login.aspx" />
     <Content Include="ProductsPage.aspx" />
+    <Content Include="styles\Style.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +161,7 @@
       <Name>A3ClassLibrary</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

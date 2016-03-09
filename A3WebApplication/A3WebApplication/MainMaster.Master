@@ -5,40 +5,46 @@
 <title>W3.CSS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<a href="styles/">styles/</a>
 <body>
-    
+        <style>
 
-<div class="w3-light-grey w3-container  w3-center w3-animate-top ">
-  <h1 class="w3-jumbo w3-dark-grey">World of t-Shirt</h1>
-  <p>Mission, Vission & make your own Shirt</p>
-</div>
+a:hover{
+    font-size:x-large;
+    color:red;
+    font-family:Red;
+}
+a:visited{
+    color:blue;
+}
 
-<div class="w3-topnav w3-large w3-center w3-blue">
-  <a href="#">Category</a>
-  <a href="#">Products</a>
-  <a href="#">Stores</a>
-  <a href="#">Contact</a>
-    <asp:HyperLink ID="hlAccount" NavigateUrl="~/Login.aspx" runat="server">Account</asp:HyperLink>
-</div>
-
+</style>
     <form id="form1" runat="server">
-<%--        9 MARKS TOTAL
-        2 BONUS MARKS TOTAL
-        TODO:
-        - 5 MARKS: Make a consistent CSS theme (with CSS file), you may download one from the internet, you just have to impliment it.
-        - 1 MARK: Show Login button along the top if the customer is not logged in
-        - 1 MARK: Show the Logout button only, if the customer is logged in
-        - 1 MARK: Show a welcome message with the currently logged in Customer's email
-        - 1 MARK: Show a link to the Admin area(s) if the Customer is logged in as an Admin
-        - BONUS 2 MARKS: show a number representing how many items are in the shopping cart right now--%>
-        <asp:ContentPlaceHolder ID="ContentPlaceHolderMain" runat="server"></asp:ContentPlaceHolder>
-    </form>
+    <div class="w3-light-grey w3-container  w3-center w3-animate-top ">
+        <h1 class="w3-jumbo w3-dark-grey">WORLD of T-SHIRT</h1>
+        <p>Mission, Vission & make your own Shirt</p>
+    </div>
+    
+    <div class="w3-topnav w3-large w3-center w3-blue">
+        <asp:Label ID="lbwelcome" runat="server" Text=""></asp:Label>
+        <asp:HyperLink ID="hlHome" NavigateUrl="~/Home.aspx" runat="server">Home</asp:HyperLink>
+        <asp:HyperLink ID="hlCategoryPage" NavigateUrl="~/CategoriesPage.aspx" runat="server">Category</asp:HyperLink>
+        <asp:HyperLink ID="hlProductsPage" NavigateUrl="~/ProductsPage.aspx" runat="server">Product</asp:HyperLink>
+        <asp:HyperLink ID="hlCartPage" NavigateUrl="~/CartPage.aspx" runat="server">Shopping Cart</asp:HyperLink>
 
-<footer class="w3-container w3-center w3-blue">
-  <h5>@EARLEYL1234@gmail.com</h5>
-  <p>Copyright all right reserved</p>
-</footer>
-     
+        <asp:HyperLink ID="hlAdmin" NavigateUrl="~/AdminPage.aspx" Visible="false" runat="server">ADMIN</asp:HyperLink>
+        <asp:HyperLink ID="hlLogin" NavigateUrl="~/Login.aspx" runat="server">Login</asp:HyperLink>
+            <asp:LinkButton ID="lbLogout" Visible="false" runat="server" OnClick="lbLogout_Click">Logout</asp:LinkButton>
+         
+    </div>
+    
+        <asp:ContentPlaceHolder ID="ContentPlaceHolderMain" runat="server"></asp:ContentPlaceHolder>
+          
+    </form>
+    <footer class="w3-container w3-center w3-blue">
+        <h5>@EARLEYL1234@gmail.com</h5>
+        <p>Copyright all right reserved</p>
+    </footer>
 </body>
-</html> 
+</html>
 

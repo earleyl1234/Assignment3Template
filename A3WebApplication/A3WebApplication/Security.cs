@@ -16,9 +16,9 @@ namespace A3WebApplication
             }
         }
 
-        public static void Login(string userName, string password)
+        public static void Login(string UserName, string Password)
         {
-            HttpContext.Current.Session["Customer"] = Customer.Login(userName, password);
+            HttpContext.Current.Session["Customer"] = Customer.Login(UserName, Password);
         }
 
         public static bool IsCustomerLoggedIn()

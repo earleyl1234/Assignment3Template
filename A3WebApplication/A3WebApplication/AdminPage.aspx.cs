@@ -11,7 +11,29 @@ namespace A3WebApplication
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+           
+        
+        }
 
+        protected void lbCategory_Click(object sender, EventArgs e)
+        {
+            pnlCategoryAdmin.Visible = true;
+            pnlCustomer.Visible = false;
+            pnlProducts.Visible = false;
+        }
+
+        protected void lbCustomer_Click(object sender, EventArgs e)
+        {
+            pnlCategoryAdmin.Visible = false;
+            pnlCustomer.Visible = true;
+            pnlProducts.Visible = false;
+        }
+
+        protected void lbProduct_Click(object sender, EventArgs e)
+        {
+            pnlProducts.Visible = true;
+            pnlCustomer.Visible = false;
+            pnlCategoryAdmin.Visible = false;
         }
     }
 }
